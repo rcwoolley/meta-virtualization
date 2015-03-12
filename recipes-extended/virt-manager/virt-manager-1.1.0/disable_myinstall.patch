@@ -1,0 +1,37 @@
+Index: b/setup.py
+===================================================================
+--- a/setup.py
++++ b/setup.py
+@@ -217,24 +217,6 @@ class my_egg_info(install_egg_info):
+         pass
+ 
+ 
+-class my_install(install):
+-    """
+-    Error if we weren't 'configure'd with the correct install prefix
+-    """
+-    def finalize_options(self):
+-        if self.prefix is None:
+-            if cliconfig.prefix != sysprefix:
+-                print "Using prefix from 'configure': %s" % cliconfig.prefix
+-                self.prefix = cliconfig.prefix
+-        elif self.prefix != cliconfig.prefix:
+-            print("Install prefix=%s doesn't match configure prefix=%s\n"
+-                  "Pass matching --prefix to 'setup.py configure'" %
+-                  (self.prefix, cliconfig.prefix))
+-            sys.exit(1)
+-
+-        install.finalize_options(self)
+-
+-
+ class my_sdist(sdist):
+     user_options = sdist.user_options + [
+         ("snapshot", "s", "add snapshot id to version"),
+@@ -626,7 +608,6 @@ setup(
+         'build_i18n': my_build_i18n,
+ 
+         'sdist': my_sdist,
+-        'install': my_install,
+         'install_egg_info': my_egg_info,
+ 
+         'configure': configure,

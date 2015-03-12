@@ -1,0 +1,29 @@
+commit 61369d252c08a45e2e947bac9437979e417104c0
+Author: Cole Robinson <crobinso@redhat.com>
+Date:   Wed Apr 17 13:23:27 2013 -0400
+
+    details: Fixing viewing disk details in 'customize' page
+
+Index: b/src/virtManager/details.py
+===================================================================
+--- a/src/virtManager/details.py
++++ b/src/virtManager/details.py
+@@ -2902,12 +2902,12 @@ class vmmDetails(vmmGObjectUI):
+         driver_type = disk.driver_type or ""
+         serial = disk.serial
+ 
+-        iotune_read_bytes_sec = disk.iotune_read_bytes_sec / 1024
+-        iotune_read_iops_sec = disk.iotune_read_iops_sec
+-        iotune_total_bytes_sec = disk.iotune_total_bytes_sec / 1024
+-        iotune_total_iops_sec = disk.iotune_total_iops_sec
+-        iotune_write_bytes_sec = disk.iotune_write_bytes_sec / 1024
+-        iotune_write_iops_sec = disk.iotune_write_iops_sec
++        iotune_read_bytes_sec = (disk.iotune_read_bytes_sec or 0) / 1024
++        iotune_read_iops_sec = (disk.iotune_read_iops_sec or 0)
++        iotune_total_bytes_sec = (disk.iotune_total_bytes_sec or 0) / 1024
++        iotune_total_iops_sec = (disk.iotune_total_iops_sec or 0)
++        iotune_write_bytes_sec = (disk.iotune_write_bytes_sec or 0) / 1024
++        iotune_write_iops_sec = (disk.iotune_write_iops_sec or 0)
+ 
+         show_format = (not self.is_customize_dialog or
+                        disk.path_exists(disk.conn, disk.path))
